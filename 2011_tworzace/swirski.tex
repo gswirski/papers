@@ -1,0 +1,487 @@
+\begin{referat}{Zwykłe funkcje tworzące}{Grzegorz Świrski}
+
+\begin{teoria}
+
+\textbf{Funkcje tworzące} są aparatem stosowanym w różnych
+dziedzinach matematyki. Jednym z najważniejszych zastosowań
+jest rozwiązywanie równań rekurencyjnych. Funkcje te stosuje się
+na przykład do wyznaczenia $n$-tego wyrazu ciągu Fibonacciego.
+Bardzo często przydają się w zliczaniu obiektów kombinatorycznych
+(najpierw układamy wzór rekurencyjny, a potem rozwiązujemy za pomocą
+funkcji tworzącej).
+
+\subsubsection{Definicje}
+
+\textbf{Funkcja tworząca} $G(x)$ ciągu współczynników 
+${g_n} = g_0, g_1, g_2,...$ jest zdefiniowana jako 
+$$ G(x) = \sum^{\infty}_{n=0} g_n x^n.$$
+
+Ciąg będziemy często zapisywać jako $\langle g_0, g_1, g_2, ... \rangle$
+lub po prostu $\langle g_n \rangle$. Współczynnik $g_n$ przy $x^n$
+oznaczymy jako $[x^n]G(x)$.
+
+Gdy mówimy o funkcjach tworzących praktycznie nigdy nie interesuje
+nas konkretna wartość liczbowa $x$. Wykładnik przy $x$ determinuje
+jedynie pozycję współczynnika w ciągu wyjściowym.
+
+Wartość $[S]$, gdzie $S$ jest dowolnym wyrażeniem logicznym, będzie równa
+1, gdy S prawdziwe. W przeciwnym wypadku wynosi 0.
+
+\subsubsection{Operacje na szeregach}
+
+Oczywistym jest, że na tak zdefiniowanym bycie możemy wykonywać wiele
+znanych operacji.
+
+Dodawanie funkcji tworzących jest dość jasne:
+\begin{align*} 
+  \alpha F(x) + \beta G(x) &= \alpha \sum_n f_n x^n + \beta \sum_n g_n x^n \\
+                           &= \sum_n (\alpha f_n + \beta g_n)x^n.
+\end{align*}
+
+Przesuwanie funkcji tworzącej nie jest wiele trudniejsze.
+Żeby przesunąć ciąg wyjściowy $\langle g_0, g_1, g_2,... \rangle$
+o $m$ miejsc w prawo (nowe miejsca wypełniając zerami) i otrzymać
+ciąg $\langle 0,...,0,g_0,g_1,g_2,...\rangle$ wystarczy pomnożyć
+naszą funkcję przez $x^m$:
+
+$$x^mG(x) = x^m \sum_n g_n x^n = \sum_n g_n x^{n+m} = \sum_n g_{n-m}x^n.$$
+
+Aby przesunąć ciąg w lewo musimy najpierw usunąć składniki, których
+zamierzamy się pozbyć po przesunięciu. Aby otrzymać ciąg $\langle g_m, g_{m+1}, g_{m+2}, ... \rangle$ odejmujemy pierwsze $m$ składników, po czym dzielimy przez $x^m$:
+
+$$\frac{G(x) - g_0 - g_1x - ... - g_{m-1}x^{m-1}}{x^m} 
+= \sum_{n \geqslant m} g_n x^{n-m} = \sum_{n \geqslant 0} g_{n+m}x^n.$$
+
+Możemy także zamienić $x$ przez jego stałą wielokrotność następującą sztuczką:
+
+$$G(cx) = \sum_n g_n (cx)^n = \sum_n c^n g_n x^n.$$
+otrzymując ciąg $\langle c^ng_n \rangle$. Szczególnie przydatny jest przypadek 
+$c = -1$.
+
+Aby pomnożyć współczynniku w szeregu możemy zastosować różniczkowanie,
+aby podzielić - całkowanie. To jednak pominiemy.
+
+Funkcje tworzące możemy również mnożyć otrzymując \emph{splot} ciągów.
+
+\begin{align*}
+  F(x)G(x) &= (f_0 + f_1x + f_2x^2 + ...)(g_0 + g_1x, g_2x^2+ ...) \\
+           &= (f_0g_0) + (f_0g_1 + f_1g_0)x + (f_0g_2 + f_1g_1 + f_2g_0)x^2 + ... \\
+           &= \sum_n (\sum_k f_k g_{n-k})x^n.
+\end{align*}
+Jeżeli ciąg $\langle h_n \rangle$ jest splotem ciągów $\langle f_n \rangle$
+i $\langle g_n \rangle$ to składnik $h_n = \sum_k f_k g_{n-k}$.
+
+\subsubsection{Podstawowe ciągi}
+
+Zacznijmy od podstawowego ciągu $\langle 1,1,1,... \rangle$, którego funkcja tworząca
+to $\sum_n x^n$. Z wzoru na sumę szeregu geometrycznego, bądź też wzoru
+Taylora dowiemy się, że suma ta ma postać zwartą $\frac{1}{1-x}$.
+
+Intuicyjnie ciąg $\langle 1,0,0,... \rangle$ ma postać zwartą $1$, a ciąg
+$\langle 0,...,0, 1, 0, ..., 0 \rangle$ (jedynka na $m$-tej pozycji) $x^m$.
+
+Kolejny bardzo ważny ciąg $\langle 1,2,3,... \rangle$ otrzymamy ze splotu
+$F(x) = 1/(1-x)$ z nią samą:
+
+$$F(x)^2 = \sum_n (\sum_{k \leqslant  n} 1)x^n = \sum_n (n+1)x^n.$$
+Postać zwarta tego ciągu to oczywiście $\frac{1}{(1-x)^2}$.
+
+Łatwo zauważyć, że splot dowolnej funkcji tworzącej z $\frac{1}{1-x}$
+daje nam funkcję tworzącą dla ciągu złożonego z sum częściowych (prefiksowych)
+ciągu początkowego.
+
+\begin{center}
+  \begin{tabular}{ l l l }
+    \textbf{Ciąg} & \textbf{Funkcja tworząca} & \textbf{Postać zwarta} \\
+    $\displaystyle \langle 1,0,0,0,... \rangle $ & $\displaystyle \sum_n [n=0]x^n $ & 1 \\
+    $\displaystyle \langle 0,...,0,1,0,... \rangle $ & $\displaystyle \sum_n [n=m]x^n $ & $\displaystyle x^m$ \\
+    $\displaystyle \langle 1,1,1,1,... \rangle $ & $\displaystyle \sum_n x^n $ & $\displaystyle \frac{1}{1-x}$ \\
+    $\displaystyle \langle 1, -1, 1, -1, 1,... \rangle $ & $\displaystyle \sum_n (-1)^nx^n $ & $\displaystyle \frac{1}{1+x}$ \\
+    $\displaystyle \langle 1,0,1,0,1,... \rangle $ & $\displaystyle \sum_n [2/n]x^n $ & $\displaystyle \frac{1}{1-x^2}$ \\
+    $\displaystyle \langle 1,0,...,0,1,0,...,0,1,0... \rangle $ & $\displaystyle \sum_n [m/n]x^n $ & $\displaystyle \frac{1}{1-x^m}$ \\
+    $\displaystyle \langle 1,2,3,4,5,... \rangle $ & $\displaystyle \sum_n (n+1)x^n $ & $\displaystyle \frac{1}{(1-x)^2}$ \\
+    $\displaystyle \langle 1,2,4,8,16,32,... \rangle $ & $\displaystyle \sum_n 2^n x^n $ & $\displaystyle \frac{1}{1-2x}$ \\
+    $\displaystyle \langle 1,4,6,4,1,0,0,... \rangle $ & $\displaystyle \sum_n {4 \choose n} x^n $ & $\displaystyle (1+x)^4$ \\
+    $\displaystyle \langle 1,c,c^2,c^3,... \rangle $ & $\displaystyle \sum_n c^n x^n $ & $\displaystyle \frac{1}{1-cx}$
+  \end{tabular}
+\end{center}
+
+% Wszystkie powyższe wzory da się wyprowadzić poznanymi metodami. 
+% Wskazówki jak je otrzymać oraz więcej przydatnych ciągów można 
+% znaleźć w książce ,,Matematyka konkretna'' autorstwa Knutha, Grahama,
+% Pasthnika.
+
+\subsubsection{Rozwiązywanie rekurencji}
+
+Rozwiązywanie równań rekurencyjnych jest jednym z najważniejszych
+zastosowań funkcji tworzących. Znalezienie zwartej postaci najpierw
+funkcji tworzącej ciągu $\langle g_n \rangle$, a potem funkcji $n$ 
+wyrażającą $n$-ty wyraz opisany rekurencją sprowadza się zazwyczaj 
+do wykonania trzech mechanicznych kroków.
+
+\begin{enumerate}
+\item Przemnożeniu obu stron równości przez $x^n$ i zsumowanie dla
+każdego $n$. Po jednej stronie równania otrzymamy sumę $\sum_n g_nx^n$,
+którą oznaczamy jako funkcję tworzącą $G(x)$. Prawą stronę przekształcamy
+do wyrażeń zawierających $G(x)$.
+\item Obliczeniu postaci zwartej funkcji tworzącej $G(x)$.
+\item Rozwinięciu $G(x)$ w szereg potęgowy i podanie współczynnika
+przy $x^n$ jako zwarta postać na $g_n$.
+\end{enumerate}
+
+Zacznijmy od prostego przykładu. Znajdźmy postać zwartą n-tego wyrazu
+opisanego w następujący sposób:
+
+\begin{align*} 
+  a_0 &= 0, \\
+  a_1 &= 1, \\
+  a_n &= 2a_{n-1} + 1.
+\end{align*}
+
+Po przemnożeniu stronami przez $x^n$ otrzymamy:
+
+$$ \sum_n a_n x^n = 2 \sum_n (a_{n-1} x^n) + \sum_n (x^n).$$
+Oznaczmy $\sum_n a_n x^n$ jako $A(x)$. Widzimy, że aby wyrazić
+$\sum_n (a_{n-1} x^n)$ musimy nasze $A(x)$ przesunąć o jeden w prawo.
+Wiemy też, że $\sum_n (x^n)$ ma postać zwartą $\frac{1}{1-x}$. Ostatecznie
+otrzymujemy równanie:
+
+\begin{align*} 
+  A(x) &= 2xA(x) + \frac{1}{1-x} \\
+  A(x)(1-2x) &= \frac{1}{1-x} \\
+  A(x) &= \frac{1}{(1-x)(1-2x)}.
+\end{align*}
+
+Następną rzeczą którą musimy zrobić jest rozłożenie naszego ułamka na
+ułamki proste. W naszym wypadku będzie to:
+
+\begin{align*}
+  \frac{1}{(1-x)(1-2x)} &= \frac{\alpha_1}{1-x} + \frac{\alpha_2}{1-2x} \\
+  1 &= \alpha_1(1-2x) + \alpha_2(1-x) \\
+  1 &= \alpha_1 + \alpha_2 + x(-2\alpha_1 - \alpha_2).
+\end{align*}
+
+Aby dwa wielomiany były równe, to współczynnik przy $x^i$ dla każdego $i$ musi
+być równy, dlatego:
+
+$$ 2 \alpha_1 + \alpha_2 = 0, \alpha_1+\alpha_2 = 1$$
+$$ \alpha_1 = -1, \alpha_2 = 2.$$
+
+Otrzymujemy więc:
+
+$$ A(x) = \frac{-1}{1-x} + \frac{2}{1-2x}.$$
+
+Widzimy, że mamy tutaj dwa razy ciąg $\langle 1,1,1,... \rangle$ przemnożony
+przez stałą, a więc:
+
+\begin{align*}
+  A(x) &= -1 \sum_n x^n + 2 \sum_n (2x)^n = \sum_n (2^nx^n - x^n) = \sum_n x^n(2^n - 1).
+\end{align*}
+
+Widzimy więc, że $a_n$ ma postać zwartą:
+
+$$ a_n = 2^n - 1.$$
+
+Pozostało nam sprawdzić indukcyjnie czy nie popełniliśmy błędu i mamy rozwiązanie.
+
+W tym przykładzie znacznie prościej było ,,zgadnąć'' rozwiązanie obserwując
+kilka pierwszych wartości i upewniając się indukcją. Niestety, nie zawsze będzie tak
+prosto, dlatego dobrze mieć mechaniczne narzędzie jakim są funkcje tworzące.
+
+Jednym z bardziej kłopotliwych etapów jest rozbicie zwartej postaci funkcji
+tworzącej na sumę ułamków prostych.
+
+Rzut oka na tabelkę najważniejszych ciągów potęgowych sugeruje, że rozkładając
+mianownik nie będziemy szukali pierwiastków postaci $(x-\rho_k)$, lecz raczej
+$(1-\rho_1x)$.
+
+Przypuśćmy, że mamy wielomian $Q(x)$ postaci
+$$ Q(x) = q_0 + q_1x + q_2x^2 + ... + q_mx^m, 
+\text{ gdzie } q_0 \not= 0 \text{ i } q_m \not= 0$$
+,,Lustrzany'' wielomian
+$$Q^R(x) = q_0x^m + q_1x^{m-1} + ... + q_m$$
+znajduje się w następującej ważnej relacji do $Q(x)$:
+\begin{align*}
+  Q^R(x) &= q_0(x - \rho_1)...(x - \rho_m) \\
+  &\Leftrightarrow Q(x) = q_0(1-\rho_1x)...(1-\rho_mx)
+\end{align*}
+dlatego bardzo często łatwiej będzie nam rozkładać lustrzane wielomiany
+w ,,standardowy'' sposób tak, ażeby potem szybko otrzymać pierwiastki
+postaci $(1-\rho_kx)$.
+
+Po znalezieniu wszystkich pierwiastków mianownika możemy zabrać się za
+szukanie naszych ułamków prostych. Każdy taki ułamek będzie miał postać
+$$\frac{\alpha_k}{1-\rho_kx}.$$
+Jeżeli któryś z pierwiastków ma krotność większą niż 1, dajmy na to $j$,
+to będziemy potrzebowali dla niego $j$ ułamków prostych:
+$$\frac{\alpha_{k1}}{1-\rho_kx}, \frac{\alpha_{k2}}{(1-\rho_kx)^2},
+..., \frac{\alpha_{kj}}{(1-\rho_kx)^j}.$$
+
+Na koniec wystarczy wszystko przemnożyć stronami i wyznaczyć współczynniki
+$\alpha_k$.
+\end{teoria}
+
+\subsection{Zadania}
+
+\subsubsection{Zadanie 1}
+\textbf{Znaleźć zwarty wzór na $n$-tą liczbę Fibonacciego. Przypomnijmy:}
+\begin{align*}
+  f_0 &= 0; f_1 = 1; \\
+  f_n &= f_{n-1} + f_{n-2}, \text{ dla } n \geqslant 2
+\end{align*}
+
+Na początku mnożymy wyraz $f_n$ przez $x^n$ i sumujmy stronami:
+\begin{align*}
+  \sum_n f_n x^n &= \sum_n f_{n-1} x^n + \sum_n f_{n-2} x^n + x \\
+  \sum_n f_n x^n &= x \sum_n f_n x^n + x^2 \sum_n f_n x^n + x \\
+  F(x) &= x F(x) + x^2 F(x) + x \\
+  F(x) &= \frac{x}{1-x-x^2}.
+\end{align*}
+
+Rozkładamy ułamek na ułamki proste. Wielomian ,,lustrzany''\\ $x^2-x-1$ ma postać
+$(x-\varphi_1)(x-\varphi_2)$, gdzie $\varphi_1 = \frac{1+\sqrt{5}}{2}$ i
+$\varphi_2 = \frac{1-\sqrt{5}}{2}$, dlatego:
+\begin{align*}
+  F(x) &= \frac{x}{1-x-x^2} = \frac{A}{1-\varphi_1 x} + \frac{B}{1-\varphi_2 x} \\
+  x &= A(1-\varphi_2 x) + B(1-\varphi_1 x) \\
+  x &= A + B - x(A\varphi_2 + B\varphi_1) \\
+  & A = \frac{1}{\sqrt{5}}, B = - \frac{1}{\sqrt{5}}.
+\end{align*}
+Zatem:
+\begin{align*}
+  F(x) &= \frac{\frac{1}{\sqrt{5}}}{1-\varphi_1 x} - \frac{\frac{1}{\sqrt{5}}}{1-\varphi_2 x} \\
+  &= \frac{1}{\sqrt{5}} \sum_n (\varphi_1 x)^n - \frac{1}{\sqrt{5}} \sum_n (\varphi_2 x)^n \\
+  &= \frac{1}{\sqrt{5}} \sum_n (\varphi_1^n - \varphi_2^n)x^n,
+\end{align*}
+czyli:
+$$ f_n = \frac{1}{\sqrt{5}} (\varphi_1^n - \varphi_2^n) = \frac{1}{\sqrt{5}} \left(\left(\frac{1+\sqrt{5}}{2}\right)^n - \left(\frac{1-\sqrt{5}}{2}\right)^n\right).$$
+
+
+\subsubsection{Zadanie 2}
+\textbf{Znaleźć zwarty wzór na $n$-ty wyraz następującej rekurencji:}
+\begin{align*}
+  g_0 &= g_1 = 1; \\
+  g_n &= g_{n-1} + 2g_{n-2} + (-1)^n, \text{ dla } n \geqslant 2.
+\end{align*}
+
+Aby ułatwić sobie wyznaczenie funkcji tworzącej poprawmy nasze
+równanie tak, aby działało również dla $n < 2$. 
+Przyjmijmy, że $g_n = 0$ dla $n < 0$. W pozostałych przypadkach:
+$$g_n = g_{n-1} + 2g_{n-2} + (-1)^n[n \geqslant 0] + [n = 1].$$
+
+Po pomnożeniu przez $x^n$ i zsumowaniu stronami:
+\begin{align*}
+\sum_n g_nx^n &= \sum_n g_{n-1}x^n + 2 \sum_n g_{n-2}x^n + 
+  \sum_{n \geqslant 0} (-1)^n x^n + \sum_{n=1} x^n \\
+G(x) &= xG(x) + 2x^2G(x) + \frac{1}{1+x} + x \\
+G(x) &= \frac{1+x+x^2}{(1-2x)(1+x)^2}.
+\end{align*}
+
+Mamy tutaj pierwiastek wielokrotny, więc przy rozkładaniu na ułamki proste
+musimy uważać:
+$$\frac{1+x+x^2}{(1-2x)(1+x)^2} = \frac{A}{(1+x)^2} + \frac{B}{1+x} + \frac{C}{1-2x}.$$
+
+Obliczamy, że $A = \frac{1}{3}, B = -\frac{1}{9}, C = \frac{7}{9}$.
+
+Zastanówmy się jak rozwinąć pierwiastek $\frac{1}{(1+x)^2}$. Wiemy, że będzie to
+splot dwóch funkcji $\frac{1}{1+x}$.
+\begin{align*}
+  \frac{1}{1+x} &= \sum_n (-1)^n x^n \\
+  \left(\frac{1}{1+x}\right)^2 &= \left(\sum_n (-1)^n x^n\right)\left(\sum_n (-1)^n x^n\right) \\
+    &= (x^0 - x^1 + x^2 - x^3 + ...)(x^0 - x^1 + x^2 - x^3 + ...) \\
+    &= (x^0 - 2x^1 + 3x^2 - 4x^3 + ...) \\
+    &= \sum_n (n+1)(-1)^nx^n.
+\end{align*}
+
+Dalsza część rozwiązania idzie mechanicznie. Otrzymujemy:
+\begin{align*}
+G(x) &= \frac{1}{3} \sum_n (n+1)(-1)^nx^n - \frac{1}{9} \sum_n (-1)^n x^n + \frac{7}{9} \sum (2x)^n \\
+     &= \sum_n \left(\frac{1}{3}(n+1)(-1)^n - \frac{1}{9}(-1)^n + \frac{7}{9}2^n\right)x^n \\
+     &= \sum_n \left((-1)^n \left(\frac{1}{3}n + \frac{2}{9}\right) + \frac{7}{9}2^n\right)x^n.
+\end{align*}
+Zatem:
+$$a_n = \frac{7}{9}2^n + (-1)^n\left(\frac{1}{3}n + \frac{2}{9}\right)$$
+
+Jak widać ciężko by nam było rozwiązać powyższą rekurencję bez użycia funkcji tworzących.
+
+\subsubsection{Zadanie 3}
+\textbf{Obliczyć, jaka jest największa liczba obszarów wyznaczonych przez
+$n$ prostych przy założeniu, że żadne dwie proste nie są równoległe
+i żadne trzy nie są współpunktowe.}
+
+Po pierwsze $n$-ta prosta zwiększa liczbę obszarów o $k$ wtedy
+i tylko wtedy, gdy przecina $k$ spośród zastanych obszarów. Dzieje się
+tak tak z kolei wtedy i tylko wtedy gdy przecina proste w $k-1$ różncyh punktach.
+Dwie proste mogą się przeciąć w co najwyżej jednym punkcie. Ponieważ żadne dwie proste
+nie są równoległe oraz ponieważ żadne trzy nie są współpunktowe, to nowa prosta
+przecina dokładnie $n-1$ zastanych prostych w dokładnie $n-1$ różnych punktach. Oznaczmy
+przez $l_n$ liczbę obszarów wyznaczonych przez $n$ prostych. Zatem:
+\begin{align*}
+  l_0 &= 1; \\
+  l_n &= l_{n-1} + n, \text{ dla } n > 0.
+\end{align*}
+
+Po pomnożeniu przez $x^n$ i zsumowaniu stronami otrzymujemy:
+\begin{align*}
+  \sum_n l_n x^n &= \sum_n l_{n-1} x^n + \sum_n nx^n + 1 \\
+  L(x) &= xL(x) + \frac{x}{(1-x)^2} + 1 \\
+  L(x) &= \frac{1-x+x^2}{(1-x)^3} = \frac{1}{(1-x)} - \frac{1}{(1-2)^2} + \frac{1}{(1-x)^3}.
+\end{align*}
+
+Łatwo zauważyć, że $1/(1-x)^3$ to postać zwarta funkcji tworzącej ciąg sum częściowych kolejnych
+liczb naturalnych. Intuicyjnie możemy więc rozwinąć postać zwartą w szereg otrzymując:
+$$\sum_n = \frac{1}{2}(n+1)(n+2)x^n.$$
+Poprawność powyższego wzoru można sprawdzić indukcyjnie.
+
+Dostajemy:
+\begin{align*}
+  L(x) &= \sum_n x^n - \sum_n (n+1)x^n + \sum_n \frac{1}{2}(n+1)(n+2)x^n \\
+  L(x) &= \left(\frac{1}{2}(2+3n+n^2) - nx^n\right)x^n \\
+  L(x) &= \frac{1}{2}(2+n+n^2)x^n \\
+  L(x) &= \left(\frac{n(n+1)}{2} + 1\right)x^n.
+\end{align*}
+
+Ilość obszarów którą otrzymamy prowadząc $n$ prostych to $\frac{n(n+1)}{2} + 1$.
+
+\subsubsection{Zadanie 4}
+\textbf{Znudzony uczeń chodzi po korytarzu wzdłuż drzwi ponumerowanych od 1 do 1024.
+Otwiera zamek nr 1, potem opuszcza lub otwiera każdy zamknięty zamek na przemian.
+Kiedy dochodzi do końca korytarza, odwraca się i idzie z powrotem ponawiając
+procedurę. Chodzi tak dopóki nie otworzy wszystkich zamków. Jaki będzie numer
+ostatniego otwartego zamka?}
+\zrodlo{102 Combinatorial Problems, USA IMO Team Training}
+
+Załóżmy, że mamy $2^n$ drzwi. Przez $l_k$ oznaczmy
+numer ostatnio otwartych drzwi. Po pierwszym przejściu ucznia wzdłuż korytarza
+pozostanie $2^{k-1}$ zamkniętych drzwi. Wszystkie one będą miały parzyste
+numery i będą one ułożone malejąco od miejsca gdzie stoi student. Przenumerujmy
+teraz drzwi od $1$ do $2^{k-1}$. Widzimy, że drzwi, które na początku miały numer
+$i$ teraz mają numer $2^{k-1} + 1 - \frac{i}{2}$. A więc, skoro $l_{k-1}$ jest
+numerem ostatnio otwartych drzwi z nową numeracją, mamy:
+$$l_{k-1} = 2^{k-1} + 1 - \frac{l_k}{2}.$$
+Rozwiązując w celu otrzymania $l_k$
+$$ l_k = 2^k + 2 - 2l_{k-1}.$$
+
+Możemy nieco uprościć nasze równanie:
+$$l_k = 2^k + 2 - 2(2^{k-1} + 2 - 2l_{k-1}) = 4 l_{k-2} - 2.$$
+
+Ponieważ $1024 = 2^{10}$ to łatwo zauważyć, że interesować będą nas
+tylko liczby postaci $l_{2j}$. Dlatego ,,skompresujmy'' nieco nasze
+równanie w celu uproszczenia rachunków:
+$$l_0 = 1, l_n = 4l_{n-1} - 2.$$
+Interesującą nas odpowiedzią będzie zatem $l_5$.
+
+Teraz możemy policzyć wynik ręcznie, spróbujmy jednak użyć funkcji
+tworzących. Po pomnożeniu przez $x^n$ i zsumowaniu stronami otrzymujemy:
+\begin{align*}
+  \sum_n l_n x^n &= 4 \sum_n l_{n-1}x^n - 2\sum_n x^n + 3 \\
+  L(x) &= 4xL(x) - \frac{2}{1-x} + 3 \\
+  L(x) &= \frac{3-\frac{2}{1-x}}{1-4x} = \frac{1-3x}{(1-x)(1-4x)} \\
+       &= \frac{2}{3(1-x)} + \frac{1}{3(1-4x)} \\
+       &= \frac{2}{3} \sum_n x^n + \frac{1}{3} \sum_n 4^n x^n \\
+       &= \sum_n \frac{1}{3}(2 + 4^n)x^n.
+\end{align*}
+Zatem:
+$$ l_n = \frac{1}{3}(2 + 4^n).$$
+
+Ostatecznym wynikiem jest $l_5 = 342.$
+
+\subsubsection{Zadanie 5}
+\textbf{Listonosz przynosi przesyłki do 19 domów przy ulicy Elm Street.
+Zauważył on, że żadne dwa sąsiadujące domy nigdy nie dostały przesyłki tego
+samego dnia, oraz że nie było dnia w którym więcej niż dwa sąsiadujące
+domy nie dostały żadnej przesyłki. Znaleźć liczbę możliwych sytuacji
+(liczbę zbiorów takich, że domy z tego zbioru otrzymały przesyłkę,
+zaś pozostałe nie).}
+\zrodlo{102 Combinatorial Problems, USA IMO Team Training}
+
+Zauważmy, że naszą sytuację dobrze opisują ciągi zer i jedynek, które
+odpowiednio informują, że nie było lub była przesyłka do danego domu. Taki
+ciąg będziemy nazywali \textit{akceptowalnym}, jeżeli nigdzie w tym ciągu nie
+występuje 11 ani 000. Przez $f_n$ oznaczmy liczbę akceptowalnych ciągów
+długości $n$. Niech $a_n$ oznacza akceptowalny ciąg długości $n$ taki, że
+00 następuje po jedynce najbardziej z lewej, natomiast $b_n$ taki, że po tejże
+jedynce występuje 01. Łatwo zauważyć, że $f_n = a_n + b_n$ dla $n \geqslant 5$.
+Usunięcie pierwszego wystąpenia 100 pokazuje, że $a_n = f_{n-3}$, a usunięcie
+10 z pierwszego wystąpienia 101 pokazuje, że $b_n = f_{n-2}$. Zatem $f_n = f_{n-2} + f_{n-3}$
+dla $n \geqslant 5$. Łatwo sprawdzić, że $f_1 = 2, f_2 = 3, f_3 = 4, f_4 = 7.$
+Dalej wystarczy pokazać, że $f_{19} = 351$.
+
+\subsubsection{Zadanie 6}
+\textbf{Niech $n$ będzie dodatnią liczbą całkowitą. Znaleźć liczbę wielomianów
+$P(x)$ ze współczynnikami w zbiorze $\{0,1,2,3\}$ takimi, że $P(2) = n$.}
+\zrodlo{102 Combinatorial Problems, USA IMO Team Training}
+
+Przez $S$ oznaczmy zbiór $\{0,1,2,3\}$ oraz
+$$P(x) = a_m x^m + a_{m-1} x^{m-1} + ... + a_1x + a_0,$$
+gdzie $a_i \in S$. Więc $P(2) = 2^m a_m + 2^{m-1} a_{m-1} + ... + 2a_1 + a_0$.
+Potrzebujemy znaleźć liczbę ciągów $(a_0, a_1, ...)$ z $a_i \in S$ takich, żeby
+$$a_0 + 2a_1 + 4a_2 + ... = \sum^\infty_{i=0} 2^ia_i = n.$$
+
+Rozważmy funkcję tworzącą
+$$f(x) = (1+x+x^2+x^3)(1+x^2+x^4+x^6)(1+x^4+x^8+x^12)...,$$
+gdzie $1+x+x^2+x^3$ oznacza możliwe wybory dla $a_0$, $1+x^2+x^4+x^6$ dla
+$a_1$ i tak dalej. Wystarczy znaleźć współczynnik wyrazu przy $x_n$ w $f(x)$.
+Zauważmy, że:
+\begin{align*}
+  f(x) &= \frac{x^4 - 1}{x-1} \cdot \frac{x^8 - 1}{x^2-1} \cdot \frac{x^{16}-1}{x^4-1} 
+  \cdot \frac{x^{64}-1}{x^8-1} \cdot... \\
+       &= \frac{1}{(x-1)(x^2-1)}.
+\end{align*}
+
+Rozkładamy to na ułamki proste otrzymując:
+\begin{align*}
+f(x) &= \frac{1}{4(x+1)} - \frac{1}{4(x-1)} + \frac{1}{2(x-1)^2} \\
+     &= \sum_n \left(\frac{1}{4}(-1)^n + \frac{1}{4} + \frac{1}{2}(n+1)\right)x^n.
+\end{align*}
+Zauważmy, że dla $n$ nieparzystego $\frac{1}{4}$ się zredukuje, natomiast\\
+$\frac{1}{2}(n+1) = \lfloor \frac{n}{2} \rfloor + 1$. Dla $n$ parzystego otrzymujemy
+$\frac{1}{2} + \frac{1}{2}(n+1) = \lfloor \frac{n}{2} \rfloor + 1$.
+
+Zatem otrzymujemy $\lfloor \frac{n}{2} \rfloor + 1$ wielomianów spełniających wymagania.
+
+\subsubsection{Zadanie 7}
+\textbf{Udowodnić, że dla ciągu liczb Fibonacciego zachodzi:}
+$$ F_0 + F_1 + ... + F_n = F_{n+2} - 1.$$
+\zrodlo{IMO Training Materials, www.imomath.com}
+
+Wiemy, że splot dowolnego szeregu z $\frac{1}{1-x}$ da nam szereg składający
+się z sum częściowych szeregu wyjściowego. Zatem lewa strona równości ma postać $F/(1-x)$,
+gdzie $F= x/(1-x-x^2)$ (funkcja tworząca ciągu Fibonacciego). Z drugiej strony mamy:
+$$\frac{F-x}{x^2} - \frac{1}{1-x}.$$
+Po kilku prostych przekształceniach dowodzimy równości.
+
+\subsubsection{Zadanie 8}
+\textbf{Niech $S$ i $F$ będą dwoma przeciwległymi wierzchołkami ośmikąta
+foremnego. Pionek zaczyna na polu $S$ i w ciągu każdej sekundy przesuwa
+się na jeden z sąsiadujących wierzchołków. Kierunek ruchu zależy od
+rzutu monetą. Procedura się kończy w momencie, gdy pionek dotrze na pole $F$.
+Niech $a_n$ oznacza liczbę różnych ścieżek o długości $n$ które pionek mógł
+przebyć aby dotrzeć z pola $S$ na pole $F$. Udowodnić, że dla $n=1,2,3...,$
+$$a_{2n-1} = 0, a_{2n} = \frac{1}{\sqrt{2}}(z^{n-1} - y^{n-1}), \text{ gdzie }
+z = 2 + \sqrt(2), y = 2 - \sqrt{2}.$$}
+\zrodlo{IMO Compendium}
+
+Ponumerujmy wierzchołki zaczynając od $S$ i idąc zgodnie
+z ruchem wskazówek zegara. W tym wypadku $S = 1$ i $F = 5$. Po nieparzystej
+ilości ruchów możemy się znaleźć jedynie na wierzchołków z parzystym numerkiem, stąd
+$a_{2n-1} = 0$ dla każdego $n \in \mathbb{N}$. Niech $z_n$ i $w_n$ oznaczają odpowiednio
+liczbę ścieżek z $S$ do $S$ w $2n$ ruchach i liczbę ścieżek z $S$ do punktów 3 oraz 7 w $2n$
+ruchach. Z łatwością otrzymujemy poniższe zależności rekurencyjne:
+$$a_{2n+2} = w_n, w_{n+1} = 2w_n + 2z_n, z_{n+1} = 2z_n + w_n, n = 0,1,2,... .$$
+Odejmując drugie równanie od pierwszego dostajemy, że $z_{n+1} = w_{n+1} + w_n$.
+Podstawiając to równanie do wzoru na $w_{n+2}$ otrzymujemy $w_{n+2} - 4w_{n+1} + 2w_n = 0$.
+Ponieważ $w_0 = 0$ i $w_1 = 2$ to otrzymujemy następującą funkcję tworzącą:
+\begin{align*}
+  W(x) &= \frac{2x}{1-4x+2x^2} = \frac{2x}{(1-(2-\sqrt{2})x)(1-(2+\sqrt{2})x)} \\
+       &= \frac{2x}{(1-yx)(1-zx)} = \frac{A}{1-yx} + \frac{B}{1-zx} \\
+       &A = - \frac{1}{\sqrt{2}}, B = \frac{1}{\sqrt{2}}.
+\end{align*}
+Zatem:
+\begin{align*}
+  W(x) &= \frac{1}{\sqrt{2}} \sum_n z^n x^n - \frac{1}{\sqrt{2}} \sum_n y^n x^n \\
+       &= \sum_n \frac{1}{\sqrt{2}} (z^n - y^n)x^n.
+\end{align*}
+Dochodzimy do tego, że $a_{2n} = w_{n-1} = (z^{n-1} - y^{n-1}) / \sqrt{2}$.
+
+\end{referat}

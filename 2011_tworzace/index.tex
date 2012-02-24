@@ -1,0 +1,95 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Wzorzec warsztatów matematycznych V LO
+%Wiktor Kuropatwa
+%Wersja 0.2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[b5paper,11pt,final,titlepage]{article}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{polski}  
+\usepackage{indentfirst} 
+\usepackage[pdftex]{graphicx}
+\usepackage{multirow}
+\usepackage{placeins} 
+\usepackage{import}
+\usepackage{rotating}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% WTF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtolength{\hoffset}{0cm} \addtolength{\textwidth}{0cm}
+\addtolength{\voffset}{-0,2cm} \addtolength{\textheight}{1,2cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Style commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\podpis}[1]{\begin{center} \textit{#1} \end{center}}
+\newcommand{\zrodlo}[1]{\begin{flushright}\textit{Źródło: #1}\end{flushright}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document structure
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{referat}[2]{\section{#1} \podpis{#2}}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Counters
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{zad}[section]
+\newcounter{roz}[section]
+\newcounter{twr}[section]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Teoria
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{teoria}{\subsection{Teoria}}{}
+\newenvironment{twierdzenie}[1]{\addtocounter{twr}{1} \textbf{Twierdzenie \arabic{section}.\arabic{twr}} (#1) \begin{itshape}}{\end{itshape}}
+\newenvironment{dowod}{\textbf{Dowód}}{\cbdu}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Zadania
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{zadania}{\subsection{Zadania} \addtocounter{zad}{1} \begin{list}{\textbf{Zadanie \arabic{section}.\arabic{zad}}}{}}{\end{list}}
+\newcommand{\zadanie}{\item \addtocounter{zad}{1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rozwiazania
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{rozwiazania}{\subsection{Rozwiazania} \addtocounter{roz}{1} \begin{list}{\textbf{\arabic{section}.\arabic{roz}}}{}}{\end{list}}
+\newcommand{\rozwiazanie}{\item \addtocounter{roz}{1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Includy
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\incl}[1]{\clearpage \input{./include/#1} \clearpage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ulatwienia
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\cbdu}{\begin{flushright}$\square$\end{flushright}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Dane
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author{}
+\title{Plik główny}
+\date{}
+
+
+\begin{document}
+
+\DeclareGraphicsExtensions{.jpg,~.pdf,~.mps,~.png,~.JPG}
+%\maketitle \tableofcontents
+
+\include{swirski}
+
+\end{document}
