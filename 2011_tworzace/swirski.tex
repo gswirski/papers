@@ -8,7 +8,7 @@ jest rozwiązywanie równań rekurencyjnych. Funkcje te stosuje się
 na przykład do wyznaczenia $n$-tego wyrazu ciągu Fibonacciego.
 Bardzo często przydają się w zliczaniu obiektów kombinatorycznych
 (najpierw układamy wzór rekurencyjny, a potem rozwiązujemy za pomocą
-funkcji tworzącej).
+funkcji tworzącej) - stąd pomysł na taki temat pracy.
 
 \subsubsection{Definicje}
 
@@ -17,8 +17,7 @@ ${g_n} = g_0, g_1, g_2,...$ jest zdefiniowana jako
 $$ G(x) = \sum^{\infty}_{n=0} g_n x^n.$$
 
 Ciąg będziemy często zapisywać jako $\langle g_0, g_1, g_2, ... \rangle$
-lub po prostu $\langle g_n \rangle$. Współczynnik $g_n$ przy $x^n$
-oznaczymy jako $[x^n]G(x)$.
+lub po prostu $\langle g_n \rangle$.
 
 Gdy mówimy o funkcjach tworzących praktycznie nigdy nie interesuje
 nas konkretna wartość liczbowa $x$. Wykładnik przy $x$ determinuje
@@ -485,3 +484,14 @@ Zatem:
 Dochodzimy do tego, że $a_{2n} = w_{n-1} = (z^{n-1} - y^{n-1}) / \sqrt{2}$.
 
 \end{referat}
+
+\subsection{Bibliografia}
+\begin{enumerate}
+  \item Ronald L. Graham, Donald E. Knuth, Oren Patashnik \textit{Matematyka konkretna}. Wyd. PWN Warszawa 2008
+  \item Dušan Djukić, Vladimir Janković, Ivan Matić, Nikola Petrović \textit{The IMO Compendium}. Wyd. Springer
+  \item Titu Andreescu, Zuming Feng \textit{102 Combinatorial Problems}. Wyd. Birkhäuser Boston
+  \item Milan Novaković \textit{Generating Functions} \\
+    http://www.imomath.com/tekstkut/genf\_mn.pdf
+  \item Zbigniew Palka, Andrzej Ruciński \textit{Wykłady z kombinatoryki}. Wyd WNT Warszawa 1998
+  \item Victor Bryant \textit{Aspekty kombinatoryki}. Wyd. WNT Warszawa 1997
+\end{enumerate}
